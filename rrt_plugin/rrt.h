@@ -11,6 +11,7 @@ using namespace std;
 class NODE{
 
 public:
+
   std::vector<double> _configuration;
   NODE* parentNode;
 
@@ -22,4 +23,17 @@ public:
 
   //Functions
   std::vector<float> getConfig(); //returns the configuration of the current node
+};
+
+
+class NODETREE{
+
+public:
+
+  std::vector<NODE*> _nodes;
+
+  //constructors
+  NODETREE();
+  ~NODETREE();
+
 };
