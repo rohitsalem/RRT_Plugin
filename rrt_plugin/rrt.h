@@ -16,7 +16,7 @@ public:
   NODE* parentNode;
 
   //constructors
-  NODE(); //CONSTRUCTOR
+  NODE(); // Empty CONSTRUCTOR
   NODE(std::vector<float> config); //CONSTRUCTOR - configuration provided
   NODE(std::vector<float> config, NODE* parent ) //CONSTRUCTOR - configuration, parent node provided
   ~NODE(); // DESTRUCTOR
@@ -33,7 +33,11 @@ public:
   std::vector<NODE*> _nodes;
 
   //constructors
-  NODETREE();
+  NODETREE(); //Empty constructor
   ~NODETREE();
+
+  //Functions
+  void addNode(NODE* node); //adds a node
+  vector<NODE*> getNodes(); //returns the vector of nodes
 
 };
