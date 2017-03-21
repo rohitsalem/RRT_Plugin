@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <vector>
 #include <openrave/plugin.h>
+#include <math.h>
 
 using namespace OpenRAVE;
 using namespace std;
@@ -18,7 +19,7 @@ public:
   //constructors
   NODE(); // Empty CONSTRUCTOR
   NODE(std::vector<float> config); //CONSTRUCTOR - configuration provided
-  NODE(std::vector<float> config, NODE* parent ) //CONSTRUCTOR - configuration, parent node provided
+  NODE(std::vector<float> config, NODE* parent ); //CONSTRUCTOR - configuration, parent node provided
   ~NODE(); // DESTRUCTOR
 
   //Functions
@@ -41,3 +42,13 @@ public:
   vector<NODE*> getNodes(); //returns the vector of nodes
 
 };
+
+
+bool collision(vector<float > config);
+vector<double> Rand();
+vector<float > vectorAdd(vector<float > v1,vector<float > v2);
+float  euclidianDistance(vector<float> config1, vector<float> config2);
+NODE* nearestNeighbhor (vector<float> config, NODETREE& tree );
+void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config );
+vector<NODE*> RRTBuild(vector<float > initial,vector<float > goal);
+
