@@ -50,5 +50,5 @@ vector<float > vectorAdd(vector<float > v1,vector<float > v2);
 float  euclidianDistance(vector<float> config1, vector<float> config2);
 NODE* nearestNeighbhor (vector<float> config, NODETREE& tree );
 void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config );
-vector<NODE*> RRTBuild(vector<float > initial,vector<float > goal);
+std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> initial, vector<float > goal, float goalBias);
 

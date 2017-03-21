@@ -105,8 +105,14 @@ bool collision(vector<float > config)
     return true;
 }
 
-vector<double> Rand()
+vector<float> Rand()
 {
+
+    vector<float> randConfig;
+
+    for (unsigned int j = 0;j<lower.size();j++)
+        randConfig.push_back(  ((float)rand()/RAND_MAX) * (upper[j]-lower[j]) +lower[j]);
+    return randConfig;
 
 }
 
@@ -134,17 +140,28 @@ void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config )
 }
 
 
-vector<NODE*> RRTBuild(vector<float > initial,vector<float > goal)
+std::vector<NODE*> RRTBuild(OpenRAVE::EnvironmentBasePtr env, vector<float> initial, vector<float > goal, float goalBias)
 {
+
+    vector<RobotBasePtr> bodies;
+    env->GetRobots(bodies);
+    RobotBasePtr robot;
+    robot=bodies[0];
+
+    robot->GetActiveDOFValues(initial);
+
+    robot->GetActiveDOFLimits(lower,upper);
+
     NODE* start;
     vector<float > qrand;
     start=new NODE (initial);
     NODETREE t;
     t.NODETREE::addNode(start);
     NODE* Nearest;
-    float bias=0.15;
+
+
     do{
-        if((float) rand()/(RAND_MAX)> bias)
+        if((float) rand()/(RAND_MAX)> goalBias)
         {
             qrand=Rand();
         }
