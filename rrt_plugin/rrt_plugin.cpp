@@ -7,7 +7,7 @@ class rrt_module : public ModuleBase
 public:
     rrt_module(EnvironmentBasePtr penv, std::istream& ss) : ModuleBase(penv) {
         RegisterCommand("MyCommand",boost::bind(&rrt_module::MyCommand,this,_1,_2),
-                        "Input : Goal <%f, %f, %f, %f, %f, %f, %f> ; GoalBias <0.1>; Step <0.3>; Weights <900,800,60,25,0,13,0> ");
+                        "Input : Goal <%f, %f, %f, %f, %f, %f, %f> ; GoalBias <0.1>; Step <0.3>; Weights < > ");
 
     }
     virtual ~rrt_module() {}
@@ -66,6 +66,8 @@ public:
 
             sout << "output";
         return true;}
+
+    //need to take data returned form the rrt and send it to python as path.
 };
 
 

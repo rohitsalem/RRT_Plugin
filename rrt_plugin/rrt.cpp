@@ -172,4 +172,3 @@ std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> in
     }while(euclidianDistance(t.NODETREE::getNodes()[t.NODETREE::getNodes().size()-1]->getConfig(),goal)>=0.25);
 
 }
-
