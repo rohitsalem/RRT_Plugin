@@ -5,7 +5,8 @@ import time
 import openravepy
 
 #### YOUR IMPORTS GO HERE ####
-
+import numpy as np
+import matplotlib as plt
 #### END OF YOUR IMPORTS ####
 
 if not __openravepy_build_doc__:
@@ -49,7 +50,7 @@ if __name__ == "__main__":
     tuckarms(env,robot);
 
     #set start config
-    jointnames =['l_shoulder_pan_joint','l_shoulder_lift_joint','l_elbow_flex_joint','l_wrist_flex_joint','l_forearm_roll_joint','l_wrist_flex_joint','l_wrist_roll_joint']
+    jointnames =['l_shoulder_pan_joint','l_shoulder_lift_joint','l_elbow_flex_joint','l_upper_arm_roll_joint','l_forearm_roll_joint','l_wrist_flex_joint','l_wrist_roll_joint']
     robot.SetActiveDOFs([robot.GetJoint(name).GetDOFIndex() for name in jointnames])
     startconfig = [-0.15,0.075,-1.008,0,0,-0.11,0]
     robot.SetActiveDOFValues(startconfig);
@@ -61,9 +62,19 @@ if __name__ == "__main__":
 
         ### YOUR CODE HERE ###
         ###call your plugin to plan, draw, and execute a path from the current configuration of the left arm to the goalconfig
-
+        #         weight 1 : 3.17104
+        # weight 2 : 2.75674
+        # weight 3 : 2.2325
+        # weight 4 : 1.78948
+        # weight 5 : 1.42903
+        # weight 6 : 0.809013
+        # weight 7 : 0.593084
+        #         
         startconfig = robot.GetActiveDOFValues() #initial configuration
-        
+
+        path= rrt_modules.SendCommand("Goal %f, %f, %f, %f, %f, %f, %f; GoalBias 0.1; Step 0.3; Weights 3.17104, 2.75674, 2.2325, 1.78948, 1.42903, 0.809013, 0.593084 ")
+
+        # need to Write function to draw the path
          ### END OF YOUR CODE ###
     waitrobot(robot)
 
