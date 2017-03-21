@@ -1,3 +1,5 @@
+#pragma once
+
 #include <openrave/plugin.h>
 #include <boost/bind.hpp>
 using namespace OpenRAVE;

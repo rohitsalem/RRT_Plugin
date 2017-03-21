@@ -1,7 +1,5 @@
 #include "rrt.h"
 
-using namespace std;
-
 // Constructors
 // Constructors when no arguments are passed
 NODE::NODE()
@@ -32,7 +30,7 @@ NODE::~NODE()
 
 //Functions
 //returns the parent node
-NODE* NODE::getparent()
+NODE* NODE::getParent()
 {
     return parentNode;
 }
@@ -44,13 +42,13 @@ vector<float > NODE::getConfig()
 }
 
 //function to add a node
-void NODETREE::addNode(NODETREE* Node)
+void NODETREE::addNode(NODE* Node)
 {
     _nodes.push_back(Node);
 }
 
 //function to return the vector of nodes
-vector<NODETREE*> NODETREE::getNodes()
+vector<NODE*> NODETREE::getNodes()
 {
     return _nodes;
 }
@@ -93,7 +91,7 @@ NODE* nearestNeighbhor (vector<float> config, NODETREE& tree )
 vector<float > vectorAdd(vector<float > v1,vector<float > v2)
 {
     vector<float > v3;
-    for(int i=0; i<v1.size();i++)
+    for(unsigned int i=0; i<v1.size();i++)
     {
         v3.push_back(v1[i]+v2[i]);
     }
@@ -123,9 +121,9 @@ void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config )
     step=nearest;
     float  Dist;
     Dist = euclidianDistance(config,nearest->getConfig());
-    for(int i=0; i<config.size();i++)
+    for(unsigned int i=0; i<config.size();i++)
     {
-        unitvector.push_back(0.75*((config[i]-nearest->getConfig()[i])/Dist));
+        unitvector.push_back((config[i]-nearest->getConfig()[i])/Dist);
     }
 
     do
@@ -143,22 +141,23 @@ void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config )
 std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> initial, vector<float> goal, float goalBias)
 {
 
-    vector<RobotBasePtr> bodies;
-    env->GetRobots(bodies);
-    RobotBasePtr robot;
-    robot=bodies[0];
+    robots = std::vector<OpenRAVE::RobotBasePtr> ();
+    env->GetRobots(robots);
+    OpenRAVE::RobotBasePtr robot;
+    robot=robots.at(0);
+    vector<NODE*> path;
 
-    robot->GetActiveDOFValues(initial);
+//    robot->GetActiveDOFValues(initial);
 
-    robot->GetActiveDOFLimits(lower,upper);
+//    robot->GetActiveDOFLimits(lower,upper);
 
-    NODE* start;
     vector<float > qrand;
-    start=new NODE (initial);
+    NODE* start;
     NODETREE t;
-    t.NODETREE::addNode(start);
     NODE* Nearest;
 
+    start=new NODE (initial);
+    t.NODETREE::addNode(start);
 
     do{
         if((float) rand()/(RAND_MAX)> goalBias)
@@ -171,4 +170,5 @@ std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> in
 
     }while(euclidianDistance(t.NODETREE::getNodes()[t.NODETREE::getNodes().size()-1]->getConfig(),goal)>=0.25);
 
+ return path ; // should change this
 }
