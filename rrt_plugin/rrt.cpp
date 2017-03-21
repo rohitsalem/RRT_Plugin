@@ -100,7 +100,7 @@ vector<float > vectorAdd(vector<float > v1,vector<float > v2)
     return v3;
 }
 
-bool collision(vector<float > config)
+bool collision(vector<float> config)
 {
     return true;
 }
@@ -140,7 +140,7 @@ void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config )
 }
 
 
-std::vector<NODE*> RRTBuild(OpenRAVE::EnvironmentBasePtr env, vector<float> initial, vector<float > goal, float goalBias)
+std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> initial, vector<float> goal, float goalBias)
 {
 
     vector<RobotBasePtr> bodies;

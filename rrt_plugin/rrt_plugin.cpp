@@ -7,17 +7,65 @@ class rrt_module : public ModuleBase
 public:
     rrt_module(EnvironmentBasePtr penv, std::istream& ss) : ModuleBase(penv) {
         RegisterCommand("MyCommand",boost::bind(&rrt_module::MyCommand,this,_1,_2),
-                        "This is an example command");
+                        "Input : Goal <%f, %f, %f, %f, %f, %f, %f> ; GoalBias <0.1>; Step <0.3>; Weights <900,800,60,25,0,13,0> ");
+
     }
     virtual ~rrt_module() {}
-    
+
+
     bool MyCommand(std::ostream& sout, std::istream& sinput)
     {
         std::string input;
+
+        std::vector <float> goalConfig;
+        float q;
+        char charInput='0';
         sinput >> input;
-        sout << "output";
-        return true;
-    }
+        // To take goal config values from the input
+        if (input == "Goal")
+        {
+            while(charInput!=';')
+            {
+                sinput >> q;
+                goalConfig.push_back(q);
+                sinput >> charInput;
+
+            }
+
+        }
+
+        charInput='0';
+        float goalBias;
+        sinput>>input;
+        //To take the Goal Bias value from the input
+        if (input== "GoalBias")
+            sinput >> goalBias;
+        sinput >> charInput; // To store the semicolon from the input
+
+        charInput='0';
+        float step;
+        sinput >> input;
+        //To take the Step Size from the input
+        if (input == "Step")
+            sinput >> step;
+
+        charInput='0';
+        std::vector<float> weights;
+        float w;
+        sinput >> input;
+        //To take the Weights from the input
+        if (input ==" Weights")
+        {
+            while(charInput !=';')
+            {
+                sinput >> w;
+                weights.push_back(w);
+                sinput >> charInput;
+            }
+        }
+
+            sout << "output";
+        return true;}
 };
 
 
@@ -34,12 +82,11 @@ InterfaceBasePtr CreateInterfaceValidated(InterfaceType type, const std::string&
 // called to query available plugins
 void GetPluginAttributesValidated(PLUGININFO& info)
 {
-info.interfacenames[PT_Module].push_back("rrt_module");
-    
+    info.interfacenames[PT_Module].push_back("rrt_module");
+
 }
 
 // called before plugin is terminated
 OPENRAVE_PLUGIN_API void DestroyPlugin()
 {
 }
-
