@@ -113,6 +113,11 @@ vector<float> Rand()
 
 }
 
+NODETREE::NODETREE(NODE *init)
+{
+    start=init;
+}
+
 void RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vector<float > config )
 {
 
@@ -134,32 +139,36 @@ void RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vec
 
     do
     {   v= vectorAdd(step->getConfig(),unitvector);
-        if((env->CheckCollision(robot)||robot->CheckSelfCollision())!=true)
-        {
-            step=new NODE(v,step);
-            t.NODETREE::addNode(step);
-        }
-    }while(euclidianDistance(config,step->getConfig())>=0.2);
 
+        step=new NODE(v,step);
+        t.NODETREE::addNode(step);
+
+    }while((euclidianDistance(config,step->getConfig())>=0.2) && (env->CheckCollision(robot)||robot->CheckSelfCollision())!=true );
+    NODE* qrand;
+    qrand =new NODE(config,step);
+    t.NODETREE::addNode(qrand);
 }
 
 
 std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> initial, vector<float> goal, float goalBias)
 {
 
-    robots = std::vector<OpenRAVE::RobotBasePtr> ();
-    env->GetRobots(robots);
-    OpenRAVE::RobotBasePtr robot;
-    robot=robots.at(0);
-    vector<NODE*> path;
+//    robots = std::vector<OpenRAVE::RobotBasePtr> ();
+//    env->GetRobots(robots);
+//    OpenRAVE::RobotBasePtr robot;
+//    robot=robots.at(0);
 
-    robot->GetActiveDOFValues(initial);
 
-    robot->GetActiveDOFLimits(lower,upper);
+    //robot->GetActiveDOFValues(initial);
+
+    robot->GetActiveDOFLimits(Lower,Upper);
+
+    vector<float> lower=float(Lower);
+     vector<float> upper=float(Upper);
 
     vector<float > qrand;
     NODE* start;
-    NODETREE t;
+    NODETREE t(start);
     NODE* Nearest;
 
     start=new NODE (initial);
@@ -174,8 +183,15 @@ std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> in
         else qrand=goal;
         Nearest=nearestNeighbhor (qrand,t);
         RRTconnect(env,t,Nearest,qrand);
-
-    }while(euclidianDistance(t.NODETREE::getNodes()[t.NODETREE::getNodes().size()-1]->getConfig(),goal)>=0.25);
-
+    }while(euclidianDistance(nearestNeighbhor(goal,t)->getConfig(),goal)>=0.25);
+    // }while(euclidianDistance(t.NODETREE::getNodes()[t.NODETREE::getNodes().size()-1]->getConfig(),goal)>=0.25);
+    std::vector<NODE*> path;
+    NODE* goalNode;
+    goalNode =new NODE(goal,nearestNeighbhor(goal,t));
+    while(goalNode->getParent()!=NULL)
+    {
+       path.push_back(goalNode);
+       goalNode=goalNode->getParent();
+    }
     return path ; // should change this
 }

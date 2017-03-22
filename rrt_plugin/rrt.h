@@ -35,9 +35,9 @@ class NODETREE{
 public:
 
     std::vector<NODE*> _nodes;
-
+    NODE* start;
     //constructors
-    NODETREE(); //Empty constructor
+    NODETREE(NODE* init); //Empty constructor
     ~NODETREE();
 
     //Functions
@@ -57,4 +57,5 @@ std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> in
 
 std::vector<OpenRAVE::RobotBasePtr> robots;
     OpenRAVE::RobotBasePtr robot;
+std::vector<dReal> Lower, Upper;
 std::vector<float> lower, upper;
