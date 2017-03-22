@@ -1,5 +1,5 @@
-#pragma once
 
+#include "rrt.h"
 #include <openrave/plugin.h>
 #include <boost/bind.hpp>
 using namespace OpenRAVE;

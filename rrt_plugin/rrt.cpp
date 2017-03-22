@@ -107,16 +107,22 @@ vector<float> Rand()
 {
 
     vector<float> randConfig;
-
     for (unsigned int j = 0;j<lower.size();j++)
         randConfig.push_back(  ((float)rand()/RAND_MAX) * (upper[j]-lower[j]) +lower[j]);
     return randConfig;
 
 }
 
-void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config )
+void RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vector<float > config )
 {
+
+    robots = std::vector<OpenRAVE::RobotBasePtr> ();
+    env->GetRobots(robots);
+    OpenRAVE::RobotBasePtr robot;
+    robot=robots.at(0);
+
     vector<float > unitvector;
+    vector<float> v;
     NODE* step;
     step=nearest;
     float  Dist;
@@ -127,13 +133,13 @@ void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config )
     }
 
     do
-    {
-        if(collision(vectorAdd(step->getConfig(),unitvector))==true)
+    {   v= vectorAdd(step->getConfig(),unitvector);
+        if((env->CheckCollision(robot)||robot->CheckSelfCollision())!=true)
         {
-            step=new NODE(vectorAdd(step->getConfig(),unitvector),step);
+            step=new NODE(v,step);
             t.NODETREE::addNode(step);
         }
-    }while(euclidianDistance(config,step->getConfig())>=0.25);
+    }while(euclidianDistance(config,step->getConfig())>=0.2);
 
 }
 
@@ -147,9 +153,9 @@ std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> in
     robot=robots.at(0);
     vector<NODE*> path;
 
-//    robot->GetActiveDOFValues(initial);
+    robot->GetActiveDOFValues(initial);
 
-//    robot->GetActiveDOFLimits(lower,upper);
+    robot->GetActiveDOFLimits(lower,upper);
 
     vector<float > qrand;
     NODE* start;
@@ -164,11 +170,12 @@ std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> in
         {
             qrand=Rand();
         }
+
         else qrand=goal;
         Nearest=nearestNeighbhor (qrand,t);
-        RRTconnect(t,Nearest,qrand);
+        RRTconnect(env,t,Nearest,qrand);
 
     }while(euclidianDistance(t.NODETREE::getNodes()[t.NODETREE::getNodes().size()-1]->getConfig(),goal)>=0.25);
 
- return path ; // should change this
+    return path ; // should change this
 }

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-#include <openrave/plugin.h>
+#include <openrave/openrave.h>
 #include <math.h>
 #include <boost/bind.hpp>
 
@@ -55,5 +55,6 @@ NODE* nearestNeighbhor (vector<float> config, NODETREE& tree );
 void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config );
 std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> initial, vector<float > goal, float goalBias);
 
-std::vector<RobotBasePtr> robots;
+std::vector<OpenRAVE::RobotBasePtr> robots;
+    OpenRAVE::RobotBasePtr robot;
 std::vector<float> lower, upper;
