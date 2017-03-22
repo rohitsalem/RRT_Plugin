@@ -19,8 +19,8 @@ public:
     {
         std::string input;
 
-        std::vector <float> goalConfig;
-        float q;
+        std::vector <double> goalConfig;
+        double q;
         char charInput='0';
         sinput >> input;
         // To take goal config values from the input
@@ -37,7 +37,7 @@ public:
         }
 
         charInput='0';
-        float goalBias;
+        double goalBias;
         sinput>>input;
         //To take the Goal Bias value from the input
         if (input== "GoalBias")
@@ -45,15 +45,15 @@ public:
         sinput >> charInput; // To store the semicolon from the input
 
         charInput='0';
-        float step;
+        double step;
         sinput >> input;
         //To take the Step Size from the input
         if (input == "Step")
             sinput >> step;
 
         charInput='0';
-        std::vector<float> weights;
-        float w;
+        std::vector<double> weights;
+        double w;
         sinput >> input;
         //To take the Weights from the input
         if (input ==" Weights")
@@ -66,7 +66,7 @@ public:
             }
         }
 
-            sout << "output";
+        sout << "output";
         return true;}
 
     //need to take data returned form the rrt and send it to python as path.

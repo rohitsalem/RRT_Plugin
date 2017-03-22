@@ -15,17 +15,17 @@ class NODE{
 
 public:
 
-    std::vector<float> _configuration;
+    std::vector<double> _configuration;
     NODE* parentNode;
 
     //constructors
     NODE(); // Empty CONSTRUCTOR
-    NODE(std::vector<float> config); //CONSTRUCTOR - configuration provided
-    NODE(std::vector<float> config, NODE* parent ); //CONSTRUCTOR - configuration, parent node provided
+    NODE(std::vector<double> config); //CONSTRUCTOR - configuration provided
+    NODE(std::vector<double> config, NODE* parent ); //CONSTRUCTOR - configuration, parent node provided
     ~NODE(); // DESTRUCTOR
 
     //Functions
-    std::vector<float> getConfig(); //returns the configuration of the current node
+    std::vector<double> getConfig(); //returns the configuration of the current node
     NODE* getParent();
 };
 
@@ -35,7 +35,7 @@ class NODETREE{
 public:
 
     std::vector<NODE*> _nodes;
-    NODE* start;
+    NODE* startNode;
     //constructors
     NODETREE(NODE* init); //Empty constructor
     ~NODETREE();
@@ -47,15 +47,14 @@ public:
 };
 
 
-bool collision(vector<float > config);
-vector<float> Rand();
-vector<float > vectorAdd(vector<float > v1,vector<float > v2);
-float  euclidianDistance(vector<float> config1, vector<float> config2);
-NODE* nearestNeighbhor (vector<float> config, NODETREE& tree );
-void RRTconnect(NODETREE& t, NODE* nearest,vector<float > config );
-std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<float> initial, vector<float > goal, float goalBias);
 
+vector<double> Rand();
+vector<double > vectorAdd(vector<double > v1,vector<double > v2);
+double  euclidianDistance(vector<double> config1, vector<double> config2);
+NODE* nearestNeighbhor (vector<double> config, NODETREE& tree );
+void RRTconnect(NODETREE& t, NODE* nearest,vector<double > config );
+std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double> initial, vector<double > goal, double goalBias);
 std::vector<OpenRAVE::RobotBasePtr> robots;
-    OpenRAVE::RobotBasePtr robot;
+OpenRAVE::RobotBasePtr robot;
 std::vector<dReal> Lower, Upper;
-std::vector<float> lower, upper;
+std::vector<double> lower, upper;
