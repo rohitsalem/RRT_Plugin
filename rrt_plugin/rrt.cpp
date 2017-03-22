@@ -2,6 +2,9 @@
 
 // Constructors
 // Constructors when no arguments are passed
+RRT::RRT()
+{}
+
 NODE::NODE()
 {
     parentNode=NULL;
@@ -98,6 +101,7 @@ vector<double > RRT::vectorAdd(vector<double > v1,vector<double > v2)
     return v3;
 }
 
+
 vector<double> RRT::Rand()
 {
 
@@ -146,20 +150,19 @@ void RRT::RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* neares
 }
 
 
-std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double> initial, vector<double> goal, double goalBias)
+std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double> goal, double goalBias)
 {
 
-//    robots = std::vector<OpenRAVE::RobotBasePtr> ();
-//    env->GetRobots(robots);
-//    OpenRAVE::RobotBasePtr robot;
-//    robot=robots.at(0);
+    //    robots = std::vector<OpenRAVE::RobotBasePtr> ();
+    env->GetRobots(robots);
+    //    OpenRAVE::RobotBasePtr robot;
+    robot=robots.at(0);
 
-//    robot->GetActiveDOFValues(initial);
+    robot->GetActiveDOFValues(initial);
 
-    robot->GetActiveDOFLimits(Lower,Upper);
-
-    vector<double> lower =vector<double>(Lower);
-    vector<double> upper =vector<double>(Upper);
+    robot->GetActiveDOFLimits(lower,upper);
+    lower[4] = lower[6] = -M_PI;
+    upper[4] = upper[6] = M_PI;
 
     vector<double > qrand;
     NODE* Nearest;

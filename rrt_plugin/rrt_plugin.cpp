@@ -4,9 +4,11 @@
 #include <boost/bind.hpp>
 using namespace OpenRAVE;
 
+
 class rrt_module : public ModuleBase
 {
 public:
+    RRT rrt;
     rrt_module(EnvironmentBasePtr penv, std::istream& ss) : ModuleBase(penv) {
         RegisterCommand("MyCommand",boost::bind(&rrt_module::MyCommand,this,_1,_2),
                         "Input : Goal <%f, %f, %f, %f, %f, %f, %f> ; GoalBias <0.1>; Step <0.3>; Weights < > ");
@@ -66,8 +68,12 @@ public:
             }
         }
 
+        vector<NODE*> path;
+        path= rrt.RRTPlanner(GetEnv(),goalConfig, goalBias);
+
         sout << "output";
-        return true;}
+        return true;
+    }
 
     //need to take data returned form the rrt and send it to python as path.
 };

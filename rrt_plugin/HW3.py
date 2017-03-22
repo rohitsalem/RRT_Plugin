@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib as plt
 #### END OF YOUR IMPORTS ####
 
+draw=[]
 if not __openravepy_build_doc__:
     from openravepy import *
     from numpy import *
@@ -40,9 +41,9 @@ if __name__ == "__main__":
     robot = env.GetRobots()[0]
 
     ### INITIALIZE YOUR PLUGIN HERE ###
-    	RaveInitialize()
-        RaveLoadPlugin('build/rrt_plugin')
-    	RRTmodule = RaveCreateModule(env,'rrt_module')
+    RaveInitialize()
+    RaveLoadPlugin('build/rrt_plugin')
+    rrtmodule = RaveCreateModule(env,'rrt_module')
     ### END INITIALIZING YOUR PLUGIN ###
 
 
@@ -52,13 +53,13 @@ if __name__ == "__main__":
     #set start config
     jointnames =['l_shoulder_pan_joint','l_shoulder_lift_joint','l_elbow_flex_joint','l_upper_arm_roll_joint','l_forearm_roll_joint','l_wrist_flex_joint','l_wrist_roll_joint']
     robot.SetActiveDOFs([robot.GetJoint(name).GetDOFIndex() for name in jointnames])
-    startconfig = [-0.15,0.075,-1.008,0,0,-0.11,0]
+    startconfig = [-0.15,0.075,-1.008,-0.11,0,-0.11,0]
     robot.SetActiveDOFValues(startconfig);
     robot.GetController().SetDesired(robot.GetDOFValues());
     waitrobot(robot)
 
     with env:
-        goalconfig = [0.449,-0.201,-0.151,0,0,-0.11,0]
+        goalconfig = [0.449,-0.201,-0.151,-0.11,0,-0.11,0]
 
         ### YOUR CODE HERE ###
         ###call your plugin to plan, draw, and execute a path from the current configuration of the left arm to the goalconfig
@@ -69,12 +70,29 @@ if __name__ == "__main__":
         # weight 5 : 1.42903
         # weight 6 : 0.809013
         # weight 7 : 0.593084
-        #         
+        #
         startconfig = robot.GetActiveDOFValues() #initial configuration
 
-        path= rrt_modules.SendCommand("Goal %f, %f, %f, %f, %f, %f, %f; GoalBias 0.1; Step 0.3; Weights 3.17104, 2.75674, 2.2325, 1.78948, 1.42903, 0.809013, 0.593084 ")
+        startTime = time.time()
+
+        path= rrtmodule.SendCommand("Goal %f, %f, %f, %f, %f, %f, %f; GoalBias 0.1; Step 0.3; Weights 3.17104, 2.75674, 2.2325, 1.78948, 1.42903, 0.809013, 0.593084 ")
+        drawPath(path,robot,[1,0,0])
+        RRTTime = time.time()-startTime
+        print 'Time taken by RRT algorithm', RRTTime
 
         # need to Write function to draw the path
+        robot.SetActiveDOFValues(startPose)
+        path = stringToFloatList(path)
+        traj = RaveCreateTrajectory(env,'')
+        traj.Init(robot.GetActiveConfigurationSpecification())
+
+        for i in xrange(len(path)):
+            traj.Insert(i,path[i])
+
+        planningutils.RetimeActiveDOFTrajectory(traj,robot,hastimestamps=False,maxvelmult=1,maxaccelmult=1)
+        print 'Duration of Trajectory =',traj.GetDuration()
+
+        robot.GetController().SetPath(traj)
          ### END OF YOUR CODE ###
     waitrobot(robot)
 
