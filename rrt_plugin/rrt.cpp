@@ -55,7 +55,7 @@ vector<NODE*> NODETREE::getNodes()
 
 // Functions
 //Function to calculate Euclidian distance
-double  euclidianDistance(vector<double> config1, vector<double> config2)
+double  RRT::euclidianDistance(vector<double> config1, vector<double> config2)
 {
     double  distance;
     int n=config1.size();
@@ -68,7 +68,7 @@ double  euclidianDistance(vector<double> config1, vector<double> config2)
 }
 
 // function for NearestNeighbor
-NODE* nearestNeighbhor (vector<double> config, NODETREE& tree )
+NODE* RRT::nearestNeighbhor (vector<double> config, NODETREE& tree )
 {
 
     double  temp=1000000;
@@ -78,7 +78,7 @@ NODE* nearestNeighbhor (vector<double> config, NODETREE& tree )
 
     for(int i =0; i<n;i++)
     {
-        len=euclidianDistance(config,tree.NODETREE::getNodes()[i]->getConfig());
+        len=RRT::euclidianDistance(config,tree.NODETREE::getNodes()[i]->getConfig());
         if (len<temp)
         {
             temp=len;
@@ -88,7 +88,7 @@ NODE* nearestNeighbhor (vector<double> config, NODETREE& tree )
     return tree.NODETREE::getNodes()[index];
 }
 
-vector<double > vectorAdd(vector<double > v1,vector<double > v2)
+vector<double > RRT::vectorAdd(vector<double > v1,vector<double > v2)
 {
     vector<double > v3;
     for(unsigned int i=0; i<v1.size();i++)
@@ -98,7 +98,7 @@ vector<double > vectorAdd(vector<double > v1,vector<double > v2)
     return v3;
 }
 
-vector<double> Rand()
+vector<double> RRT::Rand()
 {
 
     vector<double> randConfig;
@@ -114,7 +114,7 @@ NODETREE::NODETREE(NODE *init)
     _nodes.push_back(startNode);
 }
 
-void RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vector<double > config )
+void RRT::RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vector<double > config )
 {
 
     //    robots = std::vector<OpenRAVE::RobotBasePtr> ();
@@ -122,40 +122,39 @@ void RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vec
     //    OpenRAVE::RobotBasePtr robot;
     //    robot=robots.at(0);
 
-    vector<double > unitvector;
+    vector<double> unitvector;
     vector<double> v;
     NODE* step;
     step=nearest;
     double  Dist;
-    Dist = euclidianDistance(config,nearest->getConfig());
+    Dist = RRT::euclidianDistance(config,nearest->getConfig());
     for(unsigned int i=0; i<config.size();i++)
     {
         unitvector.push_back((config[i]-nearest->getConfig()[i])/Dist);
     }
 
     do
-    {   v= vectorAdd(step->getConfig(),unitvector);
+    {   v= RRT::vectorAdd(step->getConfig(),unitvector);
 
         step=new NODE(v,step);
         t.NODETREE::addNode(step);
 
-    }while((euclidianDistance(config,step->getConfig())>=0.2) && (env->CheckCollision(robot)||robot->CheckSelfCollision())!=true );
+    }while((RRT::euclidianDistance(config,step->getConfig())>=0.2) && (env->CheckCollision(robot)||robot->CheckSelfCollision())!=true );
     NODE* qrand;
     qrand =new NODE(config,step);
     t.NODETREE::addNode(qrand);
 }
 
 
-std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double> initial, vector<double> goal, double goalBias)
+std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double> initial, vector<double> goal, double goalBias)
 {
 
-    robots = std::vector<OpenRAVE::RobotBasePtr> ();
-    env->GetRobots(robots);
-    OpenRAVE::RobotBasePtr robot;
-    robot=robots.at(0);
+//    robots = std::vector<OpenRAVE::RobotBasePtr> ();
+//    env->GetRobots(robots);
+//    OpenRAVE::RobotBasePtr robot;
+//    robot=robots.at(0);
 
-
-    //    robot->GetActiveDOFValues(initial);
+//    robot->GetActiveDOFValues(initial);
 
     robot->GetActiveDOFLimits(Lower,Upper);
 
@@ -171,19 +170,19 @@ std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double> i
     do{
         if((double) rand()/(RAND_MAX)> goalBias)
         {
-            qrand=Rand();
+            qrand=RRT::Rand();
         }
 
         else qrand=goal;
-        Nearest=nearestNeighbhor (qrand,t);
-        RRTconnect(env,t,Nearest,qrand);
-    }while(euclidianDistance(nearestNeighbhor(goal,t)->getConfig(),goal)>=0.25);
+        Nearest=RRT::nearestNeighbhor (qrand,t);
+        RRT::RRTconnect(env,t,Nearest,qrand);
+    }while(RRT::euclidianDistance(RRT::nearestNeighbhor(goal,t)->getConfig(),goal)>=0.25);
 
-    // }while(euclidianDistance(t.NODETREE::getNodes()[t.NODETREE::getNodes().size()-1]->getConfig(),goal)>=0.25);
+    // }while(RRT::euclidianDistance(t.NODETREE::getNodes()[t.NODETREE::getNodes().size()-1]->getConfig(),goal)>=0.25);
 
     std::vector<NODE*> path;
     NODE* goalNode;
-    goalNode =new NODE(goal,nearestNeighbhor(goal,t));
+    goalNode =new NODE(goal,RRT::nearestNeighbhor(goal,t));
     while(goalNode->getParent()!=NULL)
     {
         path.push_back(goalNode);

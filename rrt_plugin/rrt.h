@@ -47,14 +47,23 @@ public:
 };
 
 
+class RRT{
 
-vector<double> Rand();
-vector<double > vectorAdd(vector<double > v1,vector<double > v2);
-double  euclidianDistance(vector<double> config1, vector<double> config2);
-NODE* nearestNeighbhor (vector<double> config, NODETREE& tree );
-void RRTconnect(NODETREE& t, NODE* nearest,vector<double > config );
-std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double> initial, vector<double > goal, double goalBias);
-std::vector<OpenRAVE::RobotBasePtr> robots;
-OpenRAVE::RobotBasePtr robot;
-std::vector<dReal> Lower, Upper;
-std::vector<double> lower, upper;
+public:
+    std::vector<OpenRAVE::RobotBasePtr> robots;
+    OpenRAVE::RobotBasePtr robot;
+    std::vector<dReal> Lower, Upper;
+    std::vector<double> lower, upper;
+
+    vector<double> Rand();
+    vector<double > vectorAdd(vector<double > v1,vector<double > v2);
+
+    double  euclidianDistance(vector<double> config1, vector<double> config2);
+    NODE* nearestNeighbhor (vector<double> config, NODETREE& tree );
+    void RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vector<double > config );
+    std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double> initial, vector<double > goal, double goalBias);
+};
+
+
+
+
