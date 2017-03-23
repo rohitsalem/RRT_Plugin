@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib as plt
 #### END OF YOUR IMPORTS ####
 
-draw=[]
+handles=[]
 if not __openravepy_build_doc__:
     from openravepy import *
     from numpy import *
@@ -27,6 +27,20 @@ def tuckarms(env,robot):
         robot.GetController().SetDesired(robot.GetDOFValues());
     waitrobot(robot)
 
+def stringToFloat(path):
+    p=path.split('\n')
+    for x in range(len(p)):
+	  p[x] = p[x].split(',')
+	  for i in range(len(p[x])):
+		  p[x][i]=float(p[x][i])
+    return p
+
+def drawPath(robot,path,color):
+	if type(path) is str: path = stringToFloat(path)
+	for i in path:
+		robot.SetActiveDOFValues(i)
+		handles.append(env.plot3(points=robot.GetLinks()[49].GetTransform()[0:3,3],pointsize=0.01,colors=color,drawstyle=1))
+        handles.append(env.drawlinestrip(points=robot.GetLinks()[49].GetTransform()[0:3,3],linewidth=0.1,colors=color))
 
 if __name__ == "__main__":
 
@@ -76,16 +90,12 @@ if __name__ == "__main__":
         goalBias =0.15;
 
         path= rrtmodule.SendCommand('MyCommand Goal %f, %f, %f, %f, %f, %f, %f; GoalBias %f; Step %f;  '%tuple(goalconfig+[goalBias,stepsize]))
-#        n=path.size();
-#        for x in range(n):
-#            robot.SetActiveDOFValues(path[x]);
-#            time.sleep(0.1)
-#        drawPath(path,robot,[1,0,0])
+        drawPath(robot,path,[1,0,0])
+        rrt_time=time.time()-startTime;
+        print "RRT time : "
+        print  rrt_time
+        #print stringToFloat(path)
 
-        RRTtime=time.time()-startTime;
-        print "RRT time : " 
-        print  RRTtime
-#        print path
 
 
 

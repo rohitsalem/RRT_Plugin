@@ -223,8 +223,8 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
     vector<double> initial= {-0.15,0.075,-1.008,-0.11,0,-0.11,0};
 
     robot->GetActiveDOFLimits(lower,upper);
-  //  double l=0;
-    double l= M_PI;
+    double l=0;
+  //      double l= M_PI;
     lower[4] = -l;
     lower[6] = -l;  //because they are revolute joints
     upper[4] = l;
@@ -269,7 +269,7 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
         else
         {
             cout<<"Reached goal"<< endl;
-            for(i=0;i<7;i++)
+            for(i=0;i<7;++i)
             {
                 cout<<endNode->getConfig()[i]<<" , ";
             }
@@ -278,7 +278,7 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
 
     }
 
-
+// Generating the path
     std::vector<NODE*> path;
     NODE* goalNode;
     goalNode =t.lastNode();
@@ -288,8 +288,8 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
         path.push_back(goalNode);
     }
 
+// Generating the trajectory
     vector<vector<double>> trajectoryConfig;
-
     TrajectoryBasePtr trajectory = RaveCreateTrajectory(env,"");
     trajectory->Init(robot->GetActiveConfigurationSpecification());
 
@@ -307,6 +307,7 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
     planningutils::RetimeActiveDOFTrajectory(trajectory,robot);
     robot->GetController()->SetPath(trajectory);
     cout<<"Trajectory Executed \n";
+
     return path ;
 }
 

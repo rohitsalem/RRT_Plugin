@@ -64,11 +64,12 @@ public:
         {
             for (unsigned int j=0;j<path[0]->getConfig().size();++j)
             {
-                cout<< path[i]->getConfig()[j];
-                if (j !=path[0]->getConfig().size()-1) cout<<",";
+                sout<< path[i]->getConfig()[j];
+                if (j !=path[0]->getConfig().size()-1) sout<<",";
             }
-            if (i !=path.size()-1) cout<<endl;
+            if (i !=path.size()-1) sout<<endl;
         }
+
 
 
         return true;

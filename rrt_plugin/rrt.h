@@ -51,7 +51,8 @@ public:
 class RRT{
 
 public:
-  //  std::vector<NODE*> path;
+
+    vector<GraphHandlePtr> handles;
     int i,j,min,max;
     RRT();
     ~RRT();
