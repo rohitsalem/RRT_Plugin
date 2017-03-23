@@ -187,7 +187,7 @@ void RRT::RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* neares
             nearest=new NODE(v,nearest);
             t.NODETREE::addNode(nearest);
             distance=euclidianDistance(v,config);
-            cout<<"Distance between nearest and random config: "<< distance<< endl;
+           // cout<<"Distance between nearest and random config: "<< distance<< endl;
             //   cout << "Added a Step to the tree: " << j << "\n" <<nearest->getConfig()[0]<<" "<<nearest->getConfig()[1]<<" "<<nearest->getConfig()[2]<<" "<< nearest->getConfig()[3]<<" "<< nearest->getConfig()[4]<<" "<< nearest->getConfig()[5]<<" "<< nearest->getConfig()[6]<<endl ;
         }
 
@@ -223,10 +223,12 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
     vector<double> initial= {-0.15,0.075,-1.008,-0.11,0,-0.11,0};
 
     robot->GetActiveDOFLimits(lower,upper);
-    lower[4] = -0;
-    lower[6] = -0;  //because they are revolute joints
-    upper[4] =0;
-    upper[6] = 0;
+  //  double l=0;
+    double l= M_PI;
+    lower[4] = -l;
+    lower[6] = -l;  //because they are revolute joints
+    upper[4] = l;
+    upper[6] = l;
 
     vector<double > qrand;
     NODE* Nearest;
@@ -248,17 +250,18 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
             if(rand()/(double)(RAND_MAX)> goalBias)
             {
                 qrand=RRT::Rand();
-                cout<<" Taking random Node \n";
+           //     cout<<" Taking random Node \n";
             }
             else
             {
                 qrand=goalConfig;
-                cout<< "Goal taken as random node \n"<< endl;
+             //   cout<< "Goal taken as random node \n"<< endl;
             }
 
             Nearest=RRT::nearestNeighbhor (qrand,t);
 
             //cout << "qrand : " << i <<"\n" <<qrand[0]<<" "<<qrand[1]<<" "<<qrand[2]<<" "<< qrand[3]<<" "<<qrand[4]<<" "<< qrand[5]<<" "<<qrand[6]<<endl ;
+            if(i%100==0)
             cout <<"Number of nodes explored :" << i <<endl;
             RRT::RRTconnect(env,t,Nearest,qrand);
 
@@ -281,25 +284,29 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
     goalNode =t.lastNode();
     while(goalNode->getParent()!=NULL)
     {
-
         goalNode=goalNode->getParent();
         path.push_back(goalNode);
-
     }
 
-    vector<vector<double>> trajConfig;
+    vector<vector<double>> trajectoryConfig;
+
+    TrajectoryBasePtr trajectory = RaveCreateTrajectory(env,"");
+    trajectory->Init(robot->GetActiveConfigurationSpecification());
+
     for(unsigned int i=0; i<path.size();++i)
     {
-        trajConfig.push_back( path[i]->getConfig());
+        trajectoryConfig.push_back( path[i]->getConfig());
     }
-    TrajectoryBasePtr traj = RaveCreateTrajectory(env,"");
-    traj->Init(robot->GetActiveConfigurationSpecification());
-    for (size_t i = 0; i < trajConfig.size(); ++i) {
-        traj->Insert(i,trajConfig.at(trajConfig.size()-1-i),true);
+
+    unsigned int n=trajectoryConfig.size();
+
+    for (unsigned i = 0; i <n ; ++i)
+    {
+        trajectory->Insert(i,trajectoryConfig.at(n-1-i),true);
     }
-    planningutils::RetimeActiveDOFTrajectory(traj,robot);
-    robot->GetController()->SetPath(traj);
-    cout<<"Trajectory Succesfully Executed !!! \n";
+    planningutils::RetimeActiveDOFTrajectory(trajectory,robot);
+    robot->GetController()->SetPath(trajectory);
+    cout<<"Trajectory Executed \n";
     return path ;
 }
 

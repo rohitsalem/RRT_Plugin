@@ -82,11 +82,10 @@ if __name__ == "__main__":
 #            time.sleep(0.1)
 #        drawPath(path,robot,[1,0,0])
 
-#        RRTtime=time.time()-startTime;
-#        print RRTtime
+        RRTtime=time.time()-startTime;
+        print "RRT time : " 
+        print  RRTtime
 #        print path
-        z=[0.530317,-0.0936947,-0.558349,0.118796,0,-0.53903,0];
-        robot.SetActiveDOFValues(z)
 
 
 
