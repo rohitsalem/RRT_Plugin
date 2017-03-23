@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+    #!/usr/bin/env python
 from openravepy import *
 RaveInitialize()
 RaveLoadPlugin('build/rrt_plugin')

@@ -27,6 +27,21 @@ def tuckarms(env,robot):
         robot.GetController().SetDesired(robot.GetDOFValues());
     waitrobot(robot)
 
+#def stringToFloatList(path):
+#        path = path.split('\n')
+#        for line in xrange(len(path)):
+#          path[line] = path[line].split(',')
+#          for i in xrange(len(path[line])):
+#                  path[line][i]=float(path[line][i])
+#        return path
+
+#def drawPath(path,robot,color):
+
+#        if type(path) is str: path = stringToFloatList(path)
+#        for i in path:
+#                robot.SetActiveDOFValues(i)
+#                draw.append(env.plot3(points=robot.GetLinks()[49].GetTransform()[0:3,3],pointsize=0.03,colors=color,drawstyle=1))
+
 if __name__ == "__main__":
 
     env = Environment()
@@ -42,8 +57,11 @@ if __name__ == "__main__":
 
     ### INITIALIZE YOUR PLUGIN HERE ###
     RaveInitialize()
-    RaveLoadPlugin('build/rrt_plugin')
+    RaveLoadPlugin('./librrt_plugin.so')
     rrtmodule = RaveCreateModule(env,'rrt_module')
+    if not rrtmodule:
+        print "Error loading the module"
+        exit()
     ### END INITIALIZING YOUR PLUGIN ###
 
 
@@ -63,36 +81,28 @@ if __name__ == "__main__":
 
         ### YOUR CODE HERE ###
         ###call your plugin to plan, draw, and execute a path from the current configuration of the left arm to the goalconfig
-        #         weight 1 : 3.17104
-        # weight 2 : 2.75674
-        # weight 3 : 2.2325
-        # weight 4 : 1.78948
-        # weight 5 : 1.42903
-        # weight 6 : 0.809013
-        # weight 7 : 0.593084
+
         #
         startconfig = robot.GetActiveDOFValues() #initial configuration
 
         startTime = time.time()
+        stepsize=0.3
+        goalBias =0.1;
+        path= rrtmodule.SendCommand('MyCommand Goal %f, %f, %f, %f, %f, %f, %f; GoalBias %f; Step %f;  '%tuple(goalconfig+[goalBias,stepsize]))
+#        n=path.size();
+#        for x in range(n):
+#            robot.SetActiveDOFValues(path[x]);
+#            time.sleep(0.1)
+#        drawPath(path,robot,[1,0,0])
 
-        path= rrtmodule.SendCommand("Goal %f, %f, %f, %f, %f, %f, %f; GoalBias 0.1; Step 0.3; Weights 3.17104, 2.75674, 2.2325, 1.78948, 1.42903, 0.809013, 0.593084 ")
-        drawPath(path,robot,[1,0,0])
-        RRTTime = time.time()-startTime
-        print 'Time taken by RRT algorithm', RRTTime
+        RRTtime=time.time()-startTime;
+        print RRTtime
+        print path
+#        x=[0.210043,-0.0908961,-0.492881,-0.11,0,-0.11,0]
+#        robot.SetActiveDOFValues(x)
 
-        # need to Write function to draw the path
-        robot.SetActiveDOFValues(startPose)
-        path = stringToFloatList(path)
-        traj = RaveCreateTrajectory(env,'')
-        traj.Init(robot.GetActiveConfigurationSpecification())
 
-        for i in xrange(len(path)):
-            traj.Insert(i,path[i])
 
-        planningutils.RetimeActiveDOFTrajectory(traj,robot,hastimestamps=False,maxvelmult=1,maxaccelmult=1)
-        print 'Duration of Trajectory =',traj.GetDuration()
-
-        robot.GetController().SetPath(traj)
          ### END OF YOUR CODE ###
     waitrobot(robot)
 

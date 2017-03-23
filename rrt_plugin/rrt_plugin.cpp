@@ -11,7 +11,7 @@ public:
     RRT rrt;
     rrt_module(EnvironmentBasePtr penv, std::istream& ss) : ModuleBase(penv) {
         RegisterCommand("MyCommand",boost::bind(&rrt_module::MyCommand,this,_1,_2),
-                        "Input : Goal <%f, %f, %f, %f, %f, %f, %f> ; GoalBias <0.1>; Step <0.3>; Weights < > ");
+                        "Input : Goal <%f, %f, %f, %f, %f, %f, %f> ; GoalBias <0.1>; Step <0.3> ");
 
     }
     virtual ~rrt_module() {}
@@ -19,6 +19,7 @@ public:
 
     bool MyCommand(std::ostream& sout, std::istream& sinput)
     {
+
         std::string input;
 
         std::vector <double> goalConfig;
@@ -33,7 +34,6 @@ public:
                 sinput >> q;
                 goalConfig.push_back(q);
                 sinput >> charInput;
-
             }
 
         }
@@ -44,6 +44,7 @@ public:
         //To take the Goal Bias value from the input
         if (input== "GoalBias")
             sinput >> goalBias;
+        //cout<<"goal Bias " << goalBias<<endl; //for debugging
         sinput >> charInput; // To store the semicolon from the input
 
         charInput='0';
@@ -52,26 +53,38 @@ public:
         //To take the Step Size from the input
         if (input == "Step")
             sinput >> step;
+//        cout<<"Step "<<step<<endl; //for checking
 
-        charInput='0';
-        std::vector<double> weights;
-        double w;
-        sinput >> input;
-        //To take the Weights from the input
-        if (input ==" Weights")
-        {
-            while(charInput !=';')
-            {
-                sinput >> w;
-                weights.push_back(w);
-                sinput >> charInput;
-            }
-        }
+        //        charInput='0';
+        //        std::vector<double> weights;
+        //        double w;
+        //        sinput >> input;
+        //        //To take the Weights from the input
+        //        if (input ==" Weights")
+        //        {
+        //            while(charInput !=';')
+        //            {
+        //                sinput >> w;
+        //                weights.push_back(w);
+        //                sinput >> charInput;
+        //                cout<< "w" << w <<endl;
+        //            }
+        //        }
 
         vector<NODE*> path;
-        path= rrt.RRTPlanner(GetEnv(),goalConfig, goalBias);
 
-        sout << "output";
+        path= rrt.RRTPlanner(GetEnv(),goalConfig, goalBias);
+        reverse(path.begin(),path.end());
+        for(unsigned int i=0;i<path.size();i++)
+                {
+                for (unsigned int j=0;j<path[0]->getConfig().size();j++)
+                    {
+                    cout<< path[i]->getConfig()[j];
+                    if (j !=path[0]->getConfig().size()-1) cout<<",";
+                    }
+                    if (i !=path.size()-1) cout<<endl;
+                }
+
         return true;
     }
 

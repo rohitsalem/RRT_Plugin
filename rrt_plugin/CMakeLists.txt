@@ -1,4 +1,5 @@
 cmake_minimum_required (VERSION 2.6.0)
+add_definitions(-std=c++11)
 project(rrt_plugin)
 find_package(OpenRAVE 0.9 REQUIRED)
 
