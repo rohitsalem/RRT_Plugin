@@ -59,16 +59,17 @@ public:
 
         vector<NODE*> path;
         path= rrt.RRTPlanner(GetEnv(),goalConfig, goalBias);
-//        reverse(path.begin(),path.end());
-//        for(unsigned int i=0;i<path.size();i++)
-//        {
-//            for (unsigned int j=0;j<path[0]->getConfig().size();++j)
-//            {
-//                cout<< path[i]->getConfig()[j];
-//                if (j !=path[0]->getConfig().size()-1) cout<<",";
-//            }
-//            if (i !=path.size()-1) cout<<endl;
-//        }
+        reverse(path.begin(),path.end());
+        for(unsigned int i=0;i<path.size();i++)
+        {
+            for (unsigned int j=0;j<path[0]->getConfig().size();++j)
+            {
+                cout<< path[i]->getConfig()[j];
+                if (j !=path[0]->getConfig().size()-1) cout<<",";
+            }
+            if (i !=path.size()-1) cout<<endl;
+        }
+
 
         return true;
     }

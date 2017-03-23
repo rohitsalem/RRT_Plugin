@@ -6,7 +6,7 @@
 #include <openrave/openrave.h>
 #include <math.h>
 #include <boost/bind.hpp>
-
+#include <openrave/planningutils.h>
 
 using namespace OpenRAVE;
 using namespace std;
@@ -51,7 +51,8 @@ public:
 class RRT{
 
 public:
-       int i,j;
+  //  std::vector<NODE*> path;
+    int i,j,min,max;
     RRT();
     ~RRT();
     std::vector<OpenRAVE::RobotBasePtr> robots;
@@ -67,6 +68,7 @@ public:
     void RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vector<double > config );
     std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double > goal, double goalBias);
     bool isNotInlimits(vector<double> config);
+   // std::vector<NODE*> shortCutSmooth(vector<Node*>path);
 };
 
 

@@ -27,20 +27,6 @@ def tuckarms(env,robot):
         robot.GetController().SetDesired(robot.GetDOFValues());
     waitrobot(robot)
 
-#def stringToFloatList(path):
-#        path = path.split('\n')
-#        for line in xrange(len(path)):
-#          path[line] = path[line].split(',')
-#          for i in xrange(len(path[line])):
-#                  path[line][i]=float(path[line][i])
-#        return path
-
-#def drawPath(path,robot,color):
-
-#        if type(path) is str: path = stringToFloatList(path)
-#        for i in path:
-#                robot.SetActiveDOFValues(i)
-#                draw.append(env.plot3(points=robot.GetLinks()[49].GetTransform()[0:3,3],pointsize=0.03,colors=color,drawstyle=1))
 
 if __name__ == "__main__":
 
@@ -87,7 +73,8 @@ if __name__ == "__main__":
 
         startTime = time.time()
         stepsize=0.3
-        goalBias =0.1;
+        goalBias =0.15;
+
         path= rrtmodule.SendCommand('MyCommand Goal %f, %f, %f, %f, %f, %f, %f; GoalBias %f; Step %f;  '%tuple(goalconfig+[goalBias,stepsize]))
 #        n=path.size();
 #        for x in range(n):
@@ -95,11 +82,11 @@ if __name__ == "__main__":
 #            time.sleep(0.1)
 #        drawPath(path,robot,[1,0,0])
 
-        RRTtime=time.time()-startTime;
-        print RRTtime
-        print path
-#        x=[0.210043,-0.0908961,-0.492881,-0.11,0,-0.11,0]
-#        robot.SetActiveDOFValues(x)
+#        RRTtime=time.time()-startTime;
+#        print RRTtime
+#        print path
+        z=[0.530317,-0.0936947,-0.558349,0.118796,0,-0.53903,0];
+        robot.SetActiveDOFValues(z)
 
 
 
