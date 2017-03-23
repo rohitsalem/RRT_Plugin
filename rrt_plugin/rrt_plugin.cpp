@@ -26,7 +26,9 @@ public:
         double q;
         char charInput='0';
         sinput >> input;
+
         // To take goal config values from the input
+
         if (input == "Goal")
         {
             while(charInput!=';')
@@ -44,7 +46,7 @@ public:
         //To take the Goal Bias value from the input
         if (input== "GoalBias")
             sinput >> goalBias;
-        //cout<<"goal Bias " << goalBias<<endl; //for debugging
+
         sinput >> charInput; // To store the semicolon from the input
 
         charInput='0';
@@ -53,42 +55,24 @@ public:
         //To take the Step Size from the input
         if (input == "Step")
             sinput >> step;
-//        cout<<"Step "<<step<<endl; //for checking
 
-        //        charInput='0';
-        //        std::vector<double> weights;
-        //        double w;
-        //        sinput >> input;
-        //        //To take the Weights from the input
-        //        if (input ==" Weights")
-        //        {
-        //            while(charInput !=';')
-        //            {
-        //                sinput >> w;
-        //                weights.push_back(w);
-        //                sinput >> charInput;
-        //                cout<< "w" << w <<endl;
-        //            }
-        //        }
 
         vector<NODE*> path;
-
         path= rrt.RRTPlanner(GetEnv(),goalConfig, goalBias);
-        reverse(path.begin(),path.end());
-        for(unsigned int i=0;i<path.size();i++)
-                {
-                for (unsigned int j=0;j<path[0]->getConfig().size();j++)
-                    {
-                    cout<< path[i]->getConfig()[j];
-                    if (j !=path[0]->getConfig().size()-1) cout<<",";
-                    }
-                    if (i !=path.size()-1) cout<<endl;
-                }
+//        reverse(path.begin(),path.end());
+//        for(unsigned int i=0;i<path.size();i++)
+//        {
+//            for (unsigned int j=0;j<path[0]->getConfig().size();++j)
+//            {
+//                cout<< path[i]->getConfig()[j];
+//                if (j !=path[0]->getConfig().size()-1) cout<<",";
+//            }
+//            if (i !=path.size()-1) cout<<endl;
+//        }
 
         return true;
     }
 
-    //need to take data returned form the rrt and send it to python as path.
 };
 
 

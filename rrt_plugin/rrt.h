@@ -43,6 +43,7 @@ public:
     //Functions
     void addNode(NODE* node); //adds a node
     vector<NODE*> getNodes(); //returns the vector of nodes
+    NODE* lastNode(); //get the last node
 
 };
 
@@ -50,11 +51,11 @@ public:
 class RRT{
 
 public:
+       int i,j;
     RRT();
     ~RRT();
     std::vector<OpenRAVE::RobotBasePtr> robots;
     OpenRAVE::RobotBasePtr robot;
-    //std::vector<dReal> Lower, Upper;
     std::vector<double> lower, upper;
     std::vector<double> initial;
     vector<double> Rand();
@@ -65,6 +66,7 @@ public:
     NODE* nearestNeighbhor (vector<double> config, NODETREE& tree );
     void RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vector<double > config );
     std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double > goal, double goalBias);
+    bool isNotInlimits(vector<double> config);
 };
 
 
