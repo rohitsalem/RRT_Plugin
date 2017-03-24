@@ -292,7 +292,7 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
 
 
 
-        path=shortCutSmooth(env,path,200);
+    path=shortCutSmooth(env,path,200);
 
     //Generating the trajectory
     vector<vector<double>> trajectoryConfig;
@@ -322,87 +322,76 @@ std::vector<NODE*> RRT::shortCutSmooth(OpenRAVE::EnvironmentBasePtr env,vector<N
 {
     cout <<"Path Size: " << path.size() << endl;
     for(i=0;i<iterations;i++)
-    {   cout <<"Path Size in iteration " << i<<"is"<<path.size() << endl;
+    {   cout <<"Path Size in iteration " << i<<" is "<<path.size() << endl;
         min=rand() % path.size();
         max=rand() % path.size();
         int temp;
         if(abs(max-min)>1)
         {
 
-        if(min>max)
-        {
-            temp=max;
-            max=min;
-            min=temp;
-        }
-        //cout <<"MAX " <<i<<" "<<  max << endl;
-        //cout <<"MIN " <<" "<< min << endl;
-        NODE* nodeMax= path[max];
-        NODE* nodeMin=path[min];
-
-        bool collision=false;
-        double dist;
-
-        vector<double> configMax;
-        vector<double> configMin;
-        vector<double> unitvector;
-
-        configMax=nodeMax->getConfig();
-        configMin=nodeMin->getConfig();
-//        cout <<"MIN Config: ";
-//        for(int i=0; i<7;++i)
-//        cout << " "<< configMin[i] <<endl;
-//        //cout<< "MAX Config:  " << configMax <<endl;
-
-       dist=euclidianDistance(configMin,configMax);
-
-        for(unsigned int i=0; i<7;++i)
-        {
-            unitvector.push_back(0.2*(configMax[i]-configMin[i])/dist);
-
-        }
-//        cout << "Unit Vector: "<< endl;
-//        for(int i=0; i<7;++i)
-//              cout << " "<< unitvector[i] ;
-
-
-        while(dist>0.2)
-        {
-
-            configMin= RRT::vectorAdd(configMin,unitvector);
-
-            if(!isNotInlimits(configMin))
+            if(min>max)
             {
-                robot->SetActiveDOFValues(configMin);
-                if(!(env->CheckCollision(robot))&& !(robot->CheckSelfCollision()))
-                {
-//                    cout<<"Min Config";
-//                    for (i=0;i<7;i++)
-//                    {
-//                        cout<<configMin[i]<<"," ;
-//                    }
-
-                    dist=euclidianDistance(configMin,configMax);
-                  //  cout << "Distance :" << dist <<endl;
-                }
-
-                else
-                {
-                   // cout<<"Collision "<< endl;
-                    collision=true;
-                    break;
-                }
+                temp=max;
+                max=min;
+                min=temp;
             }
-            else
-                break;
-        }
-        if(!collision)
-        {
-            path.erase(path.begin()+min+1,path.begin()+max);
-            cout<<"Path erased in iteration no :" << i;
+
+            NODE* nodeMax= path[max];
+            NODE* nodeMin=path[min];
+
+            bool collision=false;
+            double dist;
+
+            vector<double> configMax;
+            vector<double> configMin;
+            vector<double> unitvector;
+
+            configMax=nodeMax->getConfig();
+            configMin=nodeMin->getConfig();
+
+
+            dist=euclidianDistance(configMin,configMax);
+
+            for(unsigned int i=0; i<7;++i)
+            {
+                unitvector.push_back(0.2*(configMax[i]-configMin[i])/dist);
+
+            }
+
+
+            while(dist>0.2)
+            {
+
+                configMin= RRT::vectorAdd(configMin,unitvector);
+
+                if(!isNotInlimits(configMin))
+                {
+                    robot->SetActiveDOFValues(configMin);
+                    if(!(env->CheckCollision(robot))&& !(robot->CheckSelfCollision()))
+                    {
+
+
+                        dist=euclidianDistance(configMin,configMax);
+                        //  cout << "Distance :" << dist <<endl;
+                    }
+
+                    else
+                    {
+                        // cout<<"Collision "<< endl;
+                        collision=true;
+                        break;
+                    }
+                }
+                else
+                    break;
+            }
+            if(!collision)
+            {
+                path.erase(path.begin()+min+1,path.begin()+max);
+                cout<<"Path erased in iteration no : " << i <<endl;
+            }
         }
     }
-}
     return path;
 }
 
