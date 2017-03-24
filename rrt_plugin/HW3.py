@@ -40,6 +40,7 @@ def drawPath(robot,path,color):
 	for i in path:
 		robot.SetActiveDOFValues(i)
 		handles.append(env.plot3(points=robot.GetLinks()[49].GetTransform()[0:3,3],pointsize=0.01,colors=color,drawstyle=1))
+
         handles.append(env.drawlinestrip(points=robot.GetLinks()[49].GetTransform()[0:3,3],linewidth=0.1,colors=color))
 
 if __name__ == "__main__":
@@ -81,22 +82,45 @@ if __name__ == "__main__":
 
         ### YOUR CODE HERE ###
         ###call your plugin to plan, draw, and execute a path from the current configuration of the left arm to the goalconfig
-
         #
-        startconfig = robot.GetActiveDOFValues() #initial configuration
+        # file=open('test.txt','w')
+        # for i in range(1,101,5):
+        #     file.write(str(i/100.0) + "\n")
+        #     file.flush
+        #     print "GoalBias : "
+        #     print i/100.0
+        #     startconfig = robot.GetActiveDOFValues() #initial configuration
+        #
+        #
+        #     stepsize=0.3;
+        #     goalBias =i/100.0;
+        #     shortCutSmooth=1;
+        #     iterations = 200;
+        #     for j in range(10):
+        #         startTime = time.time()
+        #         path= rrtmodule.SendCommand('MyCommand Goal %f, %f, %f, %f, %f, %f, %f; GoalBias %f; Step %f;shortCutSmooth %d; iterations %d'%tuple(goalconfig+[goalBias,stepsize,shortCutSmooth,iterations]))
+        #         #drawPath(robot,path,[1,0,0])
+        #         rrt_time=time.time()-startTime;
+        #         print "RRT time : "
+        #         print  rrt_time
+        #         print "Iteration : "
+        #         print j
+        #         print "\n"
+        #         file.write(str(rrt_time) + "\n")
+        #         file.flush()
 
+        # file.close()
+            #print stringToFloat(path)
+        goalBias=0.75
+        stepsize=3
+        iterations=200
+        shortCutSmooth=1
         startTime = time.time()
-        stepsize=0.3
-        goalBias =0.15;
-
-        path= rrtmodule.SendCommand('MyCommand Goal %f, %f, %f, %f, %f, %f, %f; GoalBias %f; Step %f;  '%tuple(goalconfig+[goalBias,stepsize]))
+        path= rrtmodule.SendCommand('MyCommand Goal %f, %f, %f, %f, %f, %f, %f; GoalBias %f; Step %f;shortCutSmooth %d; iterations %d'%tuple(goalconfig+[goalBias,stepsize,shortCutSmooth,iterations]))
         drawPath(robot,path,[1,0,0])
         rrt_time=time.time()-startTime;
         print "RRT time : "
         print  rrt_time
-        #print stringToFloat(path)
-
-
 
 
          ### END OF YOUR CODE ###

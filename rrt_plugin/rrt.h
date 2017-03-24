@@ -37,6 +37,7 @@ public:
     std::vector<NODE*> _nodes;
     NODE* startNode;
     //constructors
+    NODETREE();
     NODETREE(NODE* init); //Empty constructor
     ~NODETREE();
 
@@ -70,6 +71,7 @@ public:
     std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double > goal, double goalBias);
     std::vector<NODE*> shortCutSmooth(OpenRAVE::EnvironmentBasePtr env,vector<NODE*> path, int iterations);
     bool isNotInlimits(vector<double> config);
+    std::vector<NODE*> BiRRTPlanner(OpenRAVE::EnvironmentBasePtr env,vector<double> startConfig,vector<double> goalConfig);
    // std::vector<NODE*> shortCutSmooth(vector<Node*>path);
 };
 

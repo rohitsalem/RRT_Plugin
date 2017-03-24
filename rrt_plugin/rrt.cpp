@@ -124,11 +124,16 @@ RRT::~RRT()
 
 vector<double> RRT::Rand()
 {
-
+    //cout<<"in Rand "<<endl;
     vector<double> randConfig;
-    for (unsigned int j = 0;j<lower.size();j++)
+    for (unsigned int j = 0;j<7;j++)
         randConfig.push_back(  ((double)rand()/RAND_MAX) * (upper[j]-lower[j]) +lower[j]);
     return randConfig;
+
+
+}
+NODETREE::NODETREE()
+{
 
 }
 
@@ -158,16 +163,17 @@ bool RRT::isNotInlimits(vector<double> config)
     }
     return x;
 }
+
 void RRT::RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vector<double > config )
 {
-
+    //cout<<"Inside RRT connect"<<endl;
     vector<double> unitvector;
     vector<double> v;
 
     bool collision;
     double  Dist,distance;
     Dist = RRT::euclidianDistance(config,nearest->getConfig());
-
+    //cout<<"Distance :" << Dist;
     for(unsigned int i=0; i<config.size();i++)
     {
         unitvector.push_back(0.2*(config[i]-nearest->getConfig()[i])/Dist);
@@ -217,6 +223,7 @@ void RRT::RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* neares
 std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double> goalConfig, double goalBias)
 {
     i=0;
+    cout <<"RRT Planner :" <<endl;
     srand(time(NULL));
     env->GetRobots(robots);
     robot=robots.at(0);
@@ -224,13 +231,13 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
     vector<double> initial= {-0.15,0.075,-1.008,-0.11,0,-0.11,0};
 
     robot->GetActiveDOFLimits(lower,upper);
-    double l=0;
-    //double l= M_PI;
+    //double l=0;
+    double l= M_PI;
     lower[4] = -l;
     lower[6] = -l;  //because they are revolute joints
     upper[4] = l;
     upper[6] = l;
-
+    cout<<"Goal Bias:(in rrt_cpp) "<<goalBias;
     vector<double > qrand;
     NODE* Nearest;
     NODE* start=new NODE (initial);
@@ -239,7 +246,7 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
     cout << "Start Node Config" << start->getConfig()[0]<<" "<<start->getConfig()[1]<<" "<<start->getConfig()[2]<<" "<<start->getConfig()[3]<<" "<<start->getConfig()[4]<<" "<< start->getConfig()[5]<<" "<<start->getConfig()[6]<< endl;
 
 
-    for(int i=0; i<10000; ++i)
+    for(int i=0; i<20000; ++i)
     {
         NODE* endNode;
         endNode= t.getNodes().back();
@@ -289,12 +296,9 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
         path.push_back(goalNode);
     }
 
+    //path=shortCutSmooth(env,path,200);
 
-
-
-    path=shortCutSmooth(env,path,200);
-
-    //Generating the trajectory
+    // Generating the trajectory
     vector<vector<double>> trajectoryConfig;
     TrajectoryBasePtr trajectory = RaveCreateTrajectory(env,"");
     trajectory->Init(robot->GetActiveConfigurationSpecification());
@@ -321,7 +325,7 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
 std::vector<NODE*> RRT::shortCutSmooth(OpenRAVE::EnvironmentBasePtr env,vector<NODE*> path, int iterations)
 {
     cout <<"Path Size: " << path.size() << endl;
-    for(i=0;i<iterations;i++)
+    for(i=0;i<200;i++)
     {   cout <<"Path Size in iteration " << i<<" is "<<path.size() << endl;
         min=rand() % path.size();
         max=rand() % path.size();
@@ -358,7 +362,6 @@ std::vector<NODE*> RRT::shortCutSmooth(OpenRAVE::EnvironmentBasePtr env,vector<N
 
             }
 
-
             while(dist>0.2)
             {
 
@@ -394,5 +397,99 @@ std::vector<NODE*> RRT::shortCutSmooth(OpenRAVE::EnvironmentBasePtr env,vector<N
     }
     return path;
 }
+
+
+std::vector<NODE*> RRT::BiRRTPlanner(OpenRAVE::EnvironmentBasePtr env,vector<double> startConfig,vector<double> goalConfig)
+{
+    srand(time(NULL));
+    cout<<"Bi RRT Planner " <<endl;
+    env->GetRobots(robots);
+    robot=robots.at(0);
+    robot->GetActiveDOFLimits(lower,upper);
+    //double l=0;
+    double l= M_PI;
+    lower[4] = -l;
+    lower[6] = -l;  //because they are revolute joints
+    upper[4] = l;
+    upper[6] = l;
+    NODE* START =new NODE(startConfig);
+    NODE* GOAL = new NODE(goalConfig);
+
+    NODETREE t1(START);
+    NODETREE temp;
+    NODETREE t2(GOAL);
+    //cout <<"hello" <<endl;
+    while(t1.lastNode()->getConfig()!=t2.lastNode()->getConfig())
+    {
+        //    cout<<"print inside loop" <<endl;
+        vector<double> qrand= RRT::Rand();
+        // cout<< " print random value: " <<  endl;
+        //        for(i=0;i<7;++i)
+        //            cout<< qrand[i]<<",";
+        NODE* node1= nearestNeighbhor(qrand,t1);
+        //  cout<<"Nearest Node" <<endl;
+//        for(i=0;i<7;++i)
+//            cout<< node1->getConfig()[i] <<",";
+        //cout<<"Parent Node:"<<endl;
+        //cout<<node1->getParent()<<endl;
+        RRT::RRTconnect(env,t1,node1,qrand);
+
+        qrand=t1.lastNode()->getConfig();
+        //cout<<"output"<<endl;
+        node1= nearestNeighbhor(qrand,t2);
+        RRT::RRTconnect(env,t2,node1,qrand);
+        temp=t1;
+        t1=t2;
+        t2=temp;
+    }
+    if((t1.startNode->getConfig()==startConfig))
+    {
+        temp=t1;
+        t1=t2;
+        t2=temp;
+    }
+
+    std::vector<NODE*> path;
+    NODE* goalNode;
+    goalNode =t1.lastNode();
+    while(goalNode->getParent()!=NULL)
+    {
+        goalNode=goalNode->getParent();
+        path.push_back(goalNode);
+    }
+    reverse(path.begin(),path.end());
+
+    goalNode =t2.lastNode();
+    while(goalNode->getParent()!=NULL)
+    {
+        goalNode=goalNode->getParent();
+        path.push_back(goalNode);
+    }
+
+    cout <<"Path found" <<endl;
+
+    //Generating the trajectory
+    vector<vector<double>> trajectoryConfig;
+    TrajectoryBasePtr trajectory = RaveCreateTrajectory(env,"");
+    trajectory->Init(robot->GetActiveConfigurationSpecification());
+
+    for(unsigned int i=0; i<path.size();++i)
+    {
+        trajectoryConfig.push_back( path[i]->getConfig());
+    }
+
+    unsigned int n=trajectoryConfig.size();
+
+    for (unsigned i = 0; i <n ; ++i)
+    {
+        trajectory->Insert(i,trajectoryConfig.at(n-1-i),true);
+    }
+    planningutils::RetimeActiveDOFTrajectory(trajectory,robot);
+    robot->GetController()->SetPath(trajectory);
+    cout<<"Trajectory Executed \n";
+
+    return path;
+}
+
 
 
