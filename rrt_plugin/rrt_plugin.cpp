@@ -56,9 +56,10 @@ public:
         if (input == "Step")
             sinput >> step;
 
-
+        int iterations=200;
         vector<NODE*> path;
         path= rrt.RRTPlanner(GetEnv(),goalConfig, goalBias);
+        //path=rrt.shortCutSmooth(GetEnv(),path,iterations);
         reverse(path.begin(),path.end());
         for(unsigned int i=0;i<path.size();i++)
         {

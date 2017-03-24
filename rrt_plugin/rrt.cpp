@@ -178,6 +178,7 @@ void RRT::RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* neares
 
     while(distance>0.2)
     {
+
         v= RRT::vectorAdd(nearest->getConfig(),unitvector);
         robot->SetActiveDOFValues(v);
         // cout<<"inside rrt Connect \n" <<endl;
@@ -187,7 +188,7 @@ void RRT::RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* neares
             nearest=new NODE(v,nearest);
             t.NODETREE::addNode(nearest);
             distance=euclidianDistance(v,config);
-           // cout<<"Distance between nearest and random config: "<< distance<< endl;
+            // cout<<"Distance between nearest and random config: "<< distance<< endl;
             //   cout << "Added a Step to the tree: " << j << "\n" <<nearest->getConfig()[0]<<" "<<nearest->getConfig()[1]<<" "<<nearest->getConfig()[2]<<" "<< nearest->getConfig()[3]<<" "<< nearest->getConfig()[4]<<" "<< nearest->getConfig()[5]<<" "<< nearest->getConfig()[6]<<endl ;
         }
 
@@ -224,7 +225,7 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
 
     robot->GetActiveDOFLimits(lower,upper);
     double l=0;
-  //      double l= M_PI;
+    //double l= M_PI;
     lower[4] = -l;
     lower[6] = -l;  //because they are revolute joints
     upper[4] = l;
@@ -250,19 +251,19 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
             if(rand()/(double)(RAND_MAX)> goalBias)
             {
                 qrand=RRT::Rand();
-           //     cout<<" Taking random Node \n";
+                //     cout<<" Taking random Node \n";
             }
             else
             {
                 qrand=goalConfig;
-             //   cout<< "Goal taken as random node \n"<< endl;
+                //   cout<< "Goal taken as random node \n"<< endl;
             }
 
             Nearest=RRT::nearestNeighbhor (qrand,t);
 
             //cout << "qrand : " << i <<"\n" <<qrand[0]<<" "<<qrand[1]<<" "<<qrand[2]<<" "<< qrand[3]<<" "<<qrand[4]<<" "<< qrand[5]<<" "<<qrand[6]<<endl ;
             if(i%100==0)
-            cout <<"Number of nodes explored :" << i <<endl;
+                cout <<"Number of nodes explored :" << i <<endl;
             RRT::RRTconnect(env,t,Nearest,qrand);
 
         }
@@ -278,7 +279,7 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
 
     }
 
-// Generating the path
+    // Generating the path
     std::vector<NODE*> path;
     NODE* goalNode;
     goalNode =t.lastNode();
@@ -288,7 +289,12 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
         path.push_back(goalNode);
     }
 
-// Generating the trajectory
+
+
+
+        path=shortCutSmooth(env,path,200);
+
+    //Generating the trajectory
     vector<vector<double>> trajectoryConfig;
     TrajectoryBasePtr trajectory = RaveCreateTrajectory(env,"");
     trajectory->Init(robot->GetActiveConfigurationSpecification());
@@ -312,27 +318,92 @@ std::vector<NODE*> RRT::RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<doub
 }
 
 
-//std::vector<NODE*> RRT::shortCutSmooth(vector<Node*> path){
+std::vector<NODE*> RRT::shortCutSmooth(OpenRAVE::EnvironmentBasePtr env,vector<NODE*> path, int iterations)
+{
+    cout <<"Path Size: " << path.size() << endl;
+    for(i=0;i<iterations;i++)
+    {   cout <<"Path Size in iteration " << i<<"is"<<path.size() << endl;
+        min=rand() % path.size();
+        max=rand() % path.size();
+        int temp;
+        if(abs(max-min)>1)
+        {
 
-//    srand(time(NULL));
-//    min=rand() % path.size();
-//    max=rand() % path.size();
-//    int temp;
-//    double dist;
-//    vector<double> unitvector;
-//    if(min>max)
-//    {
-//        temp=max;
-//        max=min;
-//        min=temp;
-//    }
-//    dist=weightedDistance(path[min]->getConfig(),path[max]->getConfig());
+        if(min>max)
+        {
+            temp=max;
+            max=min;
+            min=temp;
+        }
+        //cout <<"MAX " <<i<<" "<<  max << endl;
+        //cout <<"MIN " <<" "<< min << endl;
+        NODE* nodeMax= path[max];
+        NODE* nodeMin=path[min];
 
-//    for(unsigned int i=0; i<config.size();i++)
-//    {
-//        unitvector.push_back(0.2*(path[max]->getConfig()->getConfig()[i])/Dist);
-//    }
+        bool collision=false;
+        double dist;
+
+        vector<double> configMax;
+        vector<double> configMin;
+        vector<double> unitvector;
+
+        configMax=nodeMax->getConfig();
+        configMin=nodeMin->getConfig();
+//        cout <<"MIN Config: ";
+//        for(int i=0; i<7;++i)
+//        cout << " "<< configMin[i] <<endl;
+//        //cout<< "MAX Config:  " << configMax <<endl;
+
+       dist=euclidianDistance(configMin,configMax);
+
+        for(unsigned int i=0; i<7;++i)
+        {
+            unitvector.push_back(0.2*(configMax[i]-configMin[i])/dist);
+
+        }
+//        cout << "Unit Vector: "<< endl;
+//        for(int i=0; i<7;++i)
+//              cout << " "<< unitvector[i] ;
 
 
-//}
+        while(dist>0.2)
+        {
+
+            configMin= RRT::vectorAdd(configMin,unitvector);
+
+            if(!isNotInlimits(configMin))
+            {
+                robot->SetActiveDOFValues(configMin);
+                if(!(env->CheckCollision(robot))&& !(robot->CheckSelfCollision()))
+                {
+//                    cout<<"Min Config";
+//                    for (i=0;i<7;i++)
+//                    {
+//                        cout<<configMin[i]<<"," ;
+//                    }
+
+                    dist=euclidianDistance(configMin,configMax);
+                  //  cout << "Distance :" << dist <<endl;
+                }
+
+                else
+                {
+                   // cout<<"Collision "<< endl;
+                    collision=true;
+                    break;
+                }
+            }
+            else
+                break;
+        }
+        if(!collision)
+        {
+            path.erase(path.begin()+min+1,path.begin()+max);
+            cout<<"Path erased in iteration no :" << i;
+        }
+    }
+}
+    return path;
+}
+
 

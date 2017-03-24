@@ -68,6 +68,7 @@ public:
     NODE* nearestNeighbhor (vector<double> config, NODETREE& tree );
     void RRTconnect(OpenRAVE::EnvironmentBasePtr env, NODETREE& t, NODE* nearest,vector<double > config );
     std::vector<NODE*> RRTPlanner(OpenRAVE::EnvironmentBasePtr env, vector<double > goal, double goalBias);
+    std::vector<NODE*> shortCutSmooth(OpenRAVE::EnvironmentBasePtr env,vector<NODE*> path, int iterations);
     bool isNotInlimits(vector<double> config);
    // std::vector<NODE*> shortCutSmooth(vector<Node*>path);
 };
