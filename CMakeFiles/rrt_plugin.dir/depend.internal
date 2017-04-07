@@ -19,6 +19,7 @@ CMakeFiles/rrt_plugin.dir/rrt.cpp.o
  /usr/local/include/openrave-0.9/openrave/openrave.h
  /usr/local/include/openrave-0.9/openrave/physicsengine.h
  /usr/local/include/openrave-0.9/openrave/planner.h
+ /usr/local/include/openrave-0.9/openrave/planningutils.h
  /usr/local/include/openrave-0.9/openrave/plugininfo.h
  /usr/local/include/openrave-0.9/openrave/robot.h
  /usr/local/include/openrave-0.9/openrave/sensor.h
@@ -44,6 +45,7 @@ CMakeFiles/rrt_plugin.dir/rrt_plugin.cpp.o
  /usr/local/include/openrave-0.9/openrave/openrave.h
  /usr/local/include/openrave-0.9/openrave/physicsengine.h
  /usr/local/include/openrave-0.9/openrave/planner.h
+ /usr/local/include/openrave-0.9/openrave/planningutils.h
  /usr/local/include/openrave-0.9/openrave/plugin.h
  /usr/local/include/openrave-0.9/openrave/plugininfo.h
  /usr/local/include/openrave-0.9/openrave/robot.h

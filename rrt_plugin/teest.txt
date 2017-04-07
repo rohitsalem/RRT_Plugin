@@ -1,0 +1,181 @@
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:66
+Birrt Time:626952461
+Number of Nodes:214
+RRT time  : 
+0.628190994263
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:65
+Birrt Time:1671951657
+Number of Nodes:531
+RRT time  : 
+1.67276096344
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:86
+Birrt Time:2075470135
+Number of Nodes:702
+RRT time  : 
+2.07628512383
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:60
+Birrt Time:1161141449
+Number of Nodes:403
+RRT time  : 
+1.16176199913
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:69
+Birrt Time:1879210209
+Number of Nodes:616
+RRT time  : 8
+1.88004803658
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:99
+Birrt Time:7768838325
+Number of Nodes:1654
+RRT time  : 
+7.76987195015
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:72
+Birrt Time:4851776274
+Number of Nodes:1166
+RRT time  : 
+4.85270810127
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:66
+Birrt Time:2724919141
+Number of Nodes:813
+RRT time  : 
+2.7256629467
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:76
+Birrt Time:771657692
+Number of Nodes:252
+RRT time  : 
+0.772438049316
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:93
+Birrt Time:3694772833
+Number of Nodes:986
+RRT time  : 
+3.69564509392
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:71
+Birrt Time:3802989876
+Number of Nodes:994
+RRT time  : 
+3.8036570549
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:78
+Birrt Time:4196108368
+Number of Nodes:999
+RRT time  : 
+4.19731712341
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:75
+Birrt Time:4379813557
+Number of Nodes:1127
+RRT time  : 
+4.38063406944
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:80
+Birrt Time:4996944524
+Number of Nodes:1296
+RRT time  : 
+4.99804210663
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:58
+Birrt Time:3480056179
+Number of Nodes:941
+RRT time  : 
+3.48063397408
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:70
+Birrt Time:2334496899
+Number of Nodes:711
+RRT time  : 
+2.3355038166
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:62
+Birrt Time:1302380573
+Number of Nodes:405
+RRT time  : 
+1.30309891701
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:92
+Birrt Time:6636538096
+Number of Nodes:1405
+RRT time  : 
+6.63738012314
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:107
+Birrt Time:4609942320
+Number of Nodes:1172
+RRT time  : 
+4.61135601997
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:83
+Birrt Time:2096106590
+Number of Nodes:592
+RRT time  : 
+2.09694504738
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:62
+Birrt Time:839829279
+Number of Nodes:250
+RRT time  : 
+0.840456008911
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:87
+Birrt Time:2610801165
+Number of Nodes:668
+RRT time  : 
+2.61177706718
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:69
+Birrt Time:1452864735
+Number of Nodes:453
+RRT time  : 
+1.45386600494
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:94
+Birrt Time:7840665845
+Number of Nodes:1582
+RRT time  : 
+7.84219908714
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:91
+Birrt Time:2814153437
+Number of Nodes:710
+RRT time  : 
+2.81544494629
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:78
+Birrt Time:1546061440
+Number of Nodes:491
+RRT time  : 
+1.54683113098
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:89
+Birrt Time:1733722618
+Number of Nodes:546
+RRT time  : 
+1.73457407951
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:111
+Birrt Time:9426022437
+Number of Nodes:1857
+RRT time  : 
+9.42771315575
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:89
+Birrt Time:3084987989
+Number of Nodes:815
+RRT time  : 
+3.08583784103
+Bi rrt flag0Bi RRT Planner 
+Birrt Path size:69
+Birrt Time:597490619
+Number of Nodes:218
+RRT time  : 
+0.598365068436
+

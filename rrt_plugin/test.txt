@@ -1,0 +1,331 @@
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :3174
+Trajectory Executed 
+RRT Time:28
+RRT Path Size:88
+Smoothened Path size:10
+Smoothing Time:597608301
+RRT time  : 
+28.7707569599
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2069
+Trajectory Executed 
+RRT Time:7
+RRT Path Size:83
+Smoothened Path size:8
+Smoothing Time:510017794
+RRT time  : 
+8.16701006889
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2324
+Trajectory Executed 
+RRT Time:8
+RRT Path Size:107
+Smoothened Path size:14
+Smoothing Time:696779746
+RRT time  : 
+9.45975399017
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1685
+Trajectory Executed 
+RRT Time:4
+RRT Path Size:80
+Smoothened Path size:9
+Smoothing Time:615551760
+RRT time  : 
+5.04759097099
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :3112
+Trajectory Executed 
+RRT Time:16
+RRT Path Size:93
+Smoothened Path size:9
+Smoothing Time:870233576
+RRT time  : 
+17.6111621857
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :3345
+Trajectory Executed 
+RRT Time:17
+RRT Path Size:90
+Smoothened Path size:7
+Smoothing Time:580272117
+RRT time  : 
+17.8256268501
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2754
+Trajectory Executed 
+RRT Time:7
+RRT Path Size:72
+Smoothened Path size:9
+Smoothing Time:491411854
+RRT time  : 
+7.82887887955
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1674
+Trajectory Executed 
+RRT Time:4
+RRT Path Size:119
+Smoothened Path size:10
+Smoothing Time:651277015
+RRT time  : 
+4.91118693352
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1536
+Trajectory Executed 
+RRT Time:2
+RRT Path Size:79
+Smoothened Path size:9
+Smoothing Time:495937550
+RRT time  : 
+3.11457014084
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :4103
+Trajectory Executed 
+RRT Time:23
+RRT Path Size:98
+Smoothened Path size:9
+Smoothing Time:673386893
+RRT time  : 
+23.7652490139
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1666
+Trajectory Executed 
+RRT Time:4
+RRT Path Size:75
+Smoothened Path size:13
+Smoothing Time:563920555
+RRT time  : 
+4.57187485695
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1565
+Trajectory Executed 
+RRT Time:3
+RRT Path Size:128
+Smoothened Path size:6
+Smoothing Time:692233425
+RRT time  : 
+4.37563300133
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2687
+Trajectory Executed 
+RRT Time:7
+RRT Path Size:90
+Smoothened Path size:7
+Smoothing Time:580334900
+RRT time  : 
+8.455119133
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :473
+Trajectory Executed 
+RRT Time:0
+RRT Path Size:88
+Smoothened Path size:8
+Smoothing Time:764202618
+RRT time  : 
+1.71354103088
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2179
+Trajectory Executed 
+RRT Time:7
+RRT Path Size:80
+Smoothened Path size:14
+Smoothing Time:624688451
+RRT time  : 
+7.81997513771
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1115
+Trajectory Executed 
+RRT Time:1
+RRT Path Size:70
+Smoothened Path size:7
+Smoothing Time:536476094
+RRT time  : 
+1.85898590088
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1808
+Trajectory Executed 
+RRT Time:5
+RRT Path Size:97
+Smoothened Path size:17
+Smoothing Time:563810365
+RRT time  : 
+6.20807600021
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :3861
+Trajectory Executed 
+RRT Time:15
+RRT Path Size:83
+Smoothened Path size:10
+Smoothing Time:683887310
+RRT time  : 
+16.3188750744
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2110
+Trajectory Executed 
+RRT Time:9
+RRT Path Size:106
+Smoothened Path size:8
+Smoothing Time:944024623
+RRT time  : 
+10.012745142
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2198
+Trajectory Executed 
+RRT Time:5
+RRT Path Size:103
+Smoothened Path size:10
+Smoothing Time:633428584
+RRT time  : 
+6.28556013107
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2280
+Trajectory Executed 
+RRT Time:7
+RRT Path Size:79
+Smoothened Path size:13
+Smoothing Time:496778602
+RRT time  : 
+8.39204001427
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1585
+Trajectory Executed 
+RRT Time:2
+RRT Path Size:86
+Smoothened Path size:10
+Smoothing Time:879145040
+RRT time  : 
+3.60693502426
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1187
+Trajectory Executed 
+RRT Time:3
+RRT Path Size:106
+Smoothened Path size:8
+Smoothing Time:778813534
+RRT time  : 
+3.92448091507
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :4133
+Trajectory Executed 
+RRT Time:23
+RRT Path Size:116
+Smoothened Path size:9
+Smoothing Time:808066336
+RRT time  : 
+24.5107150078
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2849
+Trajectory Executed 
+RRT Time:11
+RRT Path Size:107
+Smoothened Path size:10
+Smoothing Time:813941661
+RRT time  : 
+11.9541540146
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :1053
+Trajectory Executed 
+RRT Time:2
+RRT Path Size:79
+Smoothened Path size:8
+Smoothing Time:606330306
+RRT time  : 
+3.21774482727
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :4574
+Trajectory Executed 
+RRT Time:27
+RRT Path Size:98
+Smoothened Path size:14
+Smoothing Time:600087444
+RRT time  : 
+27.8703110218
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :6751
+Trajectory Executed 
+RRT Time:63
+RRT Path Size:140
+Smoothened Path size:17
+Smoothing Time:779566378
+RRT time  : 
+64.6306951046
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :2677
+Trajectory Executed 
+RRT Time:13
+RRT Path Size:84
+Smoothened Path size:8
+Smoothing Time:444158744
+RRT time  : 
+13.5068211555
+goalBias :0.21
+RRT Planner :
+Reached goal
+no of Nodes explored :5905
+Trajectory Executed 
+RRT Time:38
+RRT Path Size:89
+Smoothened Path size:10
+Smoothing Time:613357778
+RRT time  : 
+39.2144570351
+

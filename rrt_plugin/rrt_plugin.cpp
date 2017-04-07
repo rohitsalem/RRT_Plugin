@@ -11,8 +11,7 @@ public:
     RRT rrt;
     rrt_module(EnvironmentBasePtr penv, std::istream& ss) : ModuleBase(penv) {
         RegisterCommand("MyCommand",boost::bind(&rrt_module::MyCommand,this,_1,_2),
-                        "Input : Goal <%f, %f, %f, %f, %f, %f, %f> ; GoalBias <0.1>; Step <0.3> ");
-
+                        "Input : MyCommand Goal %f, %f, %f, %f, %f, %f, %f; GoalBias %f; Step %f;shortCutSmooth %d; iterations %d ; biRRTFlag '");
     }
     virtual ~rrt_module() {}
 
@@ -42,12 +41,34 @@ public:
 
         charInput='0';
         double goalBias;
+        double iterations,biRRTflag;
         sinput>>input;
         //To take the Goal Bias value from the input
         if (input== "GoalBias")
             sinput >> goalBias;
 
         sinput >> charInput; // To store the semicolon from the input
+    //cout << "Goal bias" <<goalBias <<endl;
+
+    charInput='0';
+    sinput >>input;
+    if(input=="biRRTflag")
+        sinput>>biRRTflag;
+       // cout<<"Bi rrt flag : " << biRRTflag << endl;
+
+
+        charInput='0';
+        int shortCutSmooth;
+        sinput >>input;
+        //To take the Shortcutsmooth flag
+        if(input=="shortCutsmooth")
+            sinput>>shortCutSmooth;
+        sinput >> charInput;
+
+        charInput='0';
+        sinput >>input;
+        if(input=="iterations")
+            sinput>>iterations;
 
         charInput='0';
         double step;
@@ -55,11 +76,22 @@ public:
         //To take the Step Size from the input
         if (input == "Step")
             sinput >> step;
+        sinput >> charInput;
+        vector<double> startConfig={-0.15,0.075,-1.008,-0.11,0,-0.11,0};
 
-        int iterations=200;
         vector<NODE*> path;
-        path= rrt.RRTPlanner(GetEnv(),goalConfig, goalBias);
-        //path=rrt.shortCutSmooth(GetEnv(),path,iterations);
+        if(biRRTflag==1)
+        {
+            path=rrt.BiRRTPlanner(GetEnv(),startConfig,goalConfig);
+
+        }
+        else
+        {
+            path= rrt.RRTPlanner(GetEnv(),goalConfig, goalBias);
+        }
+
+        // path=rrt.shortCutSmooth(GetEnv(), path, iterations, goalConfig, goalBias);
+
         reverse(path.begin(),path.end());
         for(unsigned int i=0;i<path.size();i++)
         {
@@ -70,14 +102,11 @@ public:
             }
             if (i !=path.size()-1) sout<<endl;
         }
-
-
-
         return true;
     }
 
-};
 
+};
 
 // called to create a new plugin
 InterfaceBasePtr CreateInterfaceValidated(InterfaceType type, const std::string& interfacename, std::istream& sinput, EnvironmentBasePtr penv)

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="rrt_plugin" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\openrave-0.9\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/rohit/indigo_ws/src/rrt/rrt_plugin" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install">
+         <Option working_dir="/home/rohit/indigo_ws/src/rrt/rrt_plugin" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 install" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/local">
+         <Option working_dir="/home/rohit/indigo_ws/src/rrt/rrt_plugin" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 install/local" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/strip">
+         <Option working_dir="/home/rohit/indigo_ws/src/rrt/rrt_plugin" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 install/strip" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="list_install_components">
+         <Option working_dir="/home/rohit/indigo_ws/src/rrt/rrt_plugin" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 list_install_components" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/home/rohit/indigo_ws/src/rrt/rrt_plugin" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rrt_plugin">
+         <Option output="/home/rohit/indigo_ws/src/rrt/rrt_plugin/librrt_plugin.so" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/rohit/indigo_ws/src/rrt/rrt_plugin" />
+         <Option object_output="./" />
+         <Option type="3" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/usr/local/include/openrave-0.9" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 rrt_plugin" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rrt_plugin/fast">
+         <Option output="/home/rohit/indigo_ws/src/rrt/rrt_plugin/librrt_plugin.so" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/rohit/indigo_ws/src/rrt/rrt_plugin" />
+         <Option object_output="./" />
+         <Option type="3" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/usr/local/include/openrave-0.9" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 rrt_plugin/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/rohit/indigo_ws/src/rrt/rrt_plugin/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/rohit/indigo_ws/src/rrt/rrt_plugin/rrt.cpp">
+      </Unit>
+      <Unit filename="/home/rohit/indigo_ws/src/rrt/rrt_plugin/rrt_plugin.cpp">
+      </Unit>
+      <Unit filename="/home/rohit/indigo_ws/src/rrt/rrt_plugin/rrt.h">
+      </Unit>
+      <Unit filename="/home/rohit/indigo_ws/src/rrt/rrt_plugin/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/rohit/indigo_ws/src/rrt/rrt_plugin/../../../../../../usr/local/lib/cmake/openrave-0.9/openrave-config-version.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\openrave-0.9\" />
+      </Unit>
+      <Unit filename="/home/rohit/indigo_ws/src/rrt/rrt_plugin/../../../../../../usr/local/lib/cmake/openrave-0.9/openrave-config.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\openrave-0.9\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>
